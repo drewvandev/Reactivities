@@ -4,9 +4,10 @@ import { FormEvent } from "react";
 type Props = {
     activity?: Activity
     closeForm: () => void;
+    submitForm: (activity: Activity) => void;
 }
 
-export default function ActivityForm({activity, closeForm}: Props) {
+export default function ActivityForm({activity, closeForm, submitForm }: Props) {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -16,9 +17,11 @@ export default function ActivityForm({activity, closeForm}: Props) {
 
         formData.forEach((value, key) => {
             data[key] = value;
-        })
+        });
 
-        console.log(data)
+        if (activity) data.id = activity.id
+        
+        submitForm(data as unknown as Activity);
     }
 
   return (
@@ -27,12 +30,12 @@ export default function ActivityForm({activity, closeForm}: Props) {
             Create Activity
         </Typography>
         <Box component='form' display='flex' flexDirection='column' gap={3} onSubmit={handleSubmit}>
-            <TextField name='Title' label='Title' defaultValue={activity?.title}/>
-            <TextField name='Description' label='Description' defaultValue={activity?.description} multiline rows={3}/>
-            <TextField name='Category' label='Category' defaultValue={activity?.category}/>
-            <TextField name='Date' label='Date' defaultValue={activity?.date} type="date"/>
-            <TextField name='City' label='City' defaultValue={activity?.city}/>
-            <TextField name='Venue' label='Venue' defaultValue={activity?.venue} />
+            <TextField name='title' label='title' defaultValue={activity?.title}/>
+            <TextField name='description' label='description' defaultValue={activity?.description} multiline rows={3}/>
+            <TextField name='category' label='category' defaultValue={activity?.category}/>
+            <TextField name='date' label='date' defaultValue={activity?.date} type="date"/>
+            <TextField name='city' label='city' defaultValue={activity?.city}/>
+            <TextField name='venue' label='venue' defaultValue={activity?.venue} />
             <Box display='flex' justifyContent='end' gap={3}>
                 <Button onClick={closeForm} color='inherit'>Cancel</Button>
                 <Button type='submit' color='success' variant='contained'>Submit</Button>
