@@ -1,5 +1,9 @@
-import { DateArg, format } from "date-fns";
 
-export function formatDate(date: DateArg<Date>){
-    return format(date, 'dd MMM yyyy h:mm a')
-}
+export function formatDate(date: string | Date | undefined): string {
+    if (!date) return 'No date';
+    try {
+      return new Date(date).toLocaleDateString();
+    } catch {
+      return 'Invalid date';
+    }
+  }

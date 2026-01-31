@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router";
 import { formatDate } from "../../../lib/util/util";
+import { Activity } from "../../../lib/types";
 
 type Props = {
   activity: Activity;
@@ -56,8 +57,8 @@ export default function ActivityCard({ activity }: Props) {
           <Box display='flex' flexGrow={0} alignItems='center'>
           <AccessTime sx={{mr: 1}}/>
           <Typography variant="body2" noWrap >
-            {formatDate(activity.date)}
-            </Typography>
+            {activity.date ? formatDate(activity.date) : 'No date'}
+          </Typography>
           </Box>
           <Place sx={{ml: 3, mr: 1}} />
           <Typography variant="body2">{activity.venue}</Typography>
