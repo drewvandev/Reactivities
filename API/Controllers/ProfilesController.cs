@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel;
 using Application.Profiles.Commands;
 using Application.Profiles.DTOs;
 using Application.Profiles.Queries;
+using AutoMapper;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,5 +39,11 @@ public class ProfilesController : BaseApiController
     public async Task<ActionResult<UserProfile>> GetProfile(string userId)
     {
         return HandleResult(await Mediator.Send(new GetProfile.Query{UserId = userId}));
+    }
+
+    [HttpPut("{userId}/editProfile")]
+    public async Task<ActionResult> EditProfile(string userId, [FromBody] EditProfileRequest request)
+    {
+        return HandleResult(await Mediator.Send(new EditProfile.Command{UserId = userId, EditRequest = request}));
     }
 }
